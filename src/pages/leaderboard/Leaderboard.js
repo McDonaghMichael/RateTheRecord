@@ -41,14 +41,15 @@ export default function Leaderboard(){
                             {leaderboardRow++}
 
                             <td>{album.artist}
-                        </td>
-                        <td><img src={album.cover_art}></img> <a href={`/album/${album.id}`}>{album.title}</a>
-            </td>
-            <td>{album.averageRating}</td>
-                        <td>{album.year}</td>
-                    </tr>
-                ))}
-                </tbody>
+                            </td>
+                            <td><img src={album.cover_art}></img> <a href={`/album/${album.id}`}>{album.title}</a>
+                            </td>
+                            <td>{album.averageRating}</td>
+                            <td>{album.year}</td>
+                            <td>{album.ratingCount}</td>
+                        </tr>
+                    ))}
+                    </tbody>
 
                 )
                 }

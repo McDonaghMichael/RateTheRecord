@@ -116,8 +116,9 @@ app.get('/api/leaderboard', async (req, res) => {
             })
 
             const averageRating = val / albumComments.length;
+            const ratingCount = albumComments.length;
 
-            return { ...album, averageRating };
+            return { ...album, averageRating, ratingCount };
         });
 
         const leaderboard = rankedAlbums.sort(

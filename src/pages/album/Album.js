@@ -54,7 +54,7 @@ export default function Album(){
         axios.put('http://localhost:4000/api/comments/' + id, newComment)
             .then((res) => {
                 console.log(res.data);
-                navigate(`/album/${id}`);
+                navigate(`#`);
             });
     }
     return (
