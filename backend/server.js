@@ -35,6 +35,13 @@ const comments = [
         author: 'Michael',
         rating: 9,
         comment: "GOOOOD"
+    },
+    {
+        id: 3,
+        album_id: 2,
+        author: 'Tom',
+        rating: 5,
+        comment: "its okay"
     }
 ];
 
@@ -81,5 +88,35 @@ app.get('/api/comments/:id', async (req, res) => {
         res.json(matchingComments);
     } else {
         res.status(204).send('No comments found for this album');
+    }
+});
+
+app.get('/api/leaderboard', async (req, res) => {
+    try {
+        const allAlbums = albums;
+
+
+        const rankedAlbums = allAlbums.map((album) => {
+            const matchingComments = comments.filter(
+                (comment) => comment.album_id === album.id
+            );
+
+            const averageRating =
+                matchingComments.length > 0
+                    ? matchingComments.reduce((acc, comment) => acc + comment.rating, 0) /
+                    matchingComments.length
+                    : 0;
+
+            return { ...album, averageRating };
+        });
+
+        const leaderboard = rankedAlbums.sort(
+            (a, b) => b.averageRating - a.averageRating
+        );
+
+        res.json(leaderboard);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error'); // Handle errors gracefully
     }
 });
