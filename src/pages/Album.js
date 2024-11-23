@@ -12,20 +12,30 @@ export default function Album(){
     const [year, setYear] = useState("");
     const [coverArt, setCoverArt] = useState("");
     const [description, setDescription] = useState("");
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/album/' + id)
-            .then((response) => {
-                setTitle(response.data.title);
-                setArtist(response.data.artist);
-                setYear(response.data.year);
-                setDescription(response.data.description);
-                setCoverArt(response.data.cover_art);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        const fetchData = async () => {
+            try {
+                const albumResponse = await axios.get(`http://localhost:4000/api/album/${id}`);
+                setTitle(albumResponse.data.title);
+                setArtist(albumResponse.data.artist);
+                setYear(albumResponse.data.year);
+                setDescription(albumResponse.data.description);
+                setCoverArt(albumResponse.data.cover_art);
+
+                const commentsResponse = await axios.get(`http://localhost:4000/api/comments/${id}`);
+                setComments(commentsResponse.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
     }, [id]);
+
+
+
 
     return (
         <div>
@@ -34,6 +44,15 @@ export default function Album(){
             <h2>{artist}</h2>
             <img src={coverArt}></img>
             <p>{description}</p>
+            {comments.length > 0 && (
+                <ul>
+                    {comments.map((comment) => (
+                        <li key={comment.id}>
+                            {comment.author} {comment.rating}/10 - {comment.comment}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 
