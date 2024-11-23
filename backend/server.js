@@ -91,21 +91,31 @@ app.get('/api/comments/:id', async (req, res) => {
     }
 });
 
+app.put('/api/comments/:id', async (req, res) => {
+  comments.push({
+        id: 4,
+        album_id: req.body.nId,
+        author: req.body.author,
+        rating: req.body.nRating,
+        comment: req.body.comment
+    });
+
+  console.log(comments);
+});
+
 app.get('/api/leaderboard', async (req, res) => {
     try {
         const allAlbums = albums;
 
-
         const rankedAlbums = allAlbums.map((album) => {
-            const matchingComments = comments.filter(
-                (comment) => comment.album_id === album.id
-            );
 
-            const averageRating =
-                matchingComments.length > 0
-                    ? matchingComments.reduce((acc, comment) => acc + comment.rating, 0) /
-                    matchingComments.length
-                    : 0;
+            const albumComments = comments.filter(com => com.album_id === album.id);
+            let val = 0;
+            albumComments.forEach(comment => {
+                val += comment.rating;
+            })
+
+            const averageRating = val / albumComments.length;
 
             return { ...album, averageRating };
         });
@@ -117,6 +127,6 @@ app.get('/api/leaderboard', async (req, res) => {
         res.json(leaderboard);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error'); // Handle errors gracefully
+        res.status(500).send('Internal Server Error');
     }
 });
