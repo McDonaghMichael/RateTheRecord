@@ -40,7 +40,7 @@ export default function Leaderboard(){
                         <tr>
                             {leaderboardRow++}
 
-                            <td>{album.artist}
+                            <td><a href={`/artist/${album.artist}`}>{album.artistInfo[0].name}</a>
                             </td>
                             <td><img src={album.cover_art}></img> <a href={`/album/${album.id}`}>{album.title}</a>
                             </td>
