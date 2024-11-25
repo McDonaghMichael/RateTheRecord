@@ -35,17 +35,29 @@ const artists = [
     {
         id: 1,
         name: "Elton John",
-        age: 75
+        age: 75,
+        headers: {
+            "early life": "hiiii",
+            "career": "hiiii",
+        }
     },
     {
         id: 2,
         name: "The Weeknd",
-        age: 75
+        age: 75,
+        headers: {
+            "early life": "hiiii",
+            "career": "hiiii",
+        }
     },
     {
         id: 3,
         name: "Queen",
-        age: 75
+        age: 75,
+        headers: {
+            "early life": "hiiii",
+            "career": "hiiii",
+        }
     }
 ]
 
