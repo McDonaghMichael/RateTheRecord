@@ -106,9 +106,12 @@ app.use(function(req, res, next) {
     next();
 });
 
+// Returns an array of all the albums
 app.get('/api/albums', (req, res) => {
     res.json(albums);
 });
+
+// Returns the array of information belonging to an album
 app.get('/api/album/:id', async (req, res) => {
     const albumId = parseInt(req.params.id);
     const album = albums.find(album => album.id === albumId);
@@ -120,6 +123,46 @@ app.get('/api/album/:id', async (req, res) => {
     }
 });
 
+// Returns all the comments belonging to a certain album
+app.get('/api/album/:id/comments', async (req, res) => {
+    const albumId = parseInt(req.params.id);
+    const matchingComments = comments.filter(comment => comment.album_id === albumId);
+
+    if (matchingComments.length > 0) {
+        res.json(matchingComments);
+    } else {
+        res.status(204).send('No comments found for this album');
+    }
+});
+
+app.put('/api/album/comment/create', async (req, res) => {
+
+    let id = 0;
+
+    // Loops through all the artists in order to find the highest id
+    comments.forEach(comment => {
+        if(comment.id > id) {
+            id = comment.id;
+        }
+    })
+
+    comments.push({
+        id: id + 1,
+        album_id: req.body.nId,
+        author: req.body.author,
+        rating: req.body.nRating,
+        comment: req.body.comment
+    });
+
+    console.log(comments);
+});
+
+// Returns an array of all the artists
+app.get('/api/artists', (req, res) => {
+    res.json(artists);
+});
+
+// Returns an array of information about an artist
 app.get('/api/artist/:id', async (req, res) => {
     const artistId = parseInt(req.params.id);
     const artist = artists.find(artist => artist.id === artistId);
@@ -131,34 +174,32 @@ app.get('/api/artist/:id', async (req, res) => {
     }
 });
 
-app.get('/api/comments/:id', async (req, res) => {
-    const albumId = parseInt(req.params.id);
-    const matchingComments = comments.filter(comment => comment.album_id === albumId);
+// Returns an array of albums belonging to an artist
+app.get('/api/artist/:id/albums', async (req, res) => {const albumId = parseInt(req.params.id);
+    const artistId = parseInt(req.params.id);
+    const artistAlbums = albums.filter(album => album.artist === artistId);
 
-    if (matchingComments.length > 0) {
-        res.json(matchingComments);
+    if (artistAlbums.length > 0) {
+        res.json(artistAlbums);
     } else {
-        res.status(204).send('No comments found for this album');
+        res.status(204).send('No albums found for this artist');
     }
-});
 
-app.put('/api/comments/:id', async (req, res) => {
-    comments.push({
-        id: 4,
-        album_id: req.body.nId,
-        author: req.body.author,
-        rating: req.body.nRating,
-        comment: req.body.comment
-    });
-
-    console.log(comments);
 });
 
 app.put('/api/artist/create', async (req, res) => {
 
-    // ID Needs to get highest id and then add 1
+    let id = 0;
+
+    // Loops through all of the artists in order to find the highest id
+    artists.forEach(artist => {
+        if(artist.id > id) {
+            id = artist.id;
+        }
+    })
+
     artists.push({
-        id: artists.length + 1,
+        id: id + 1,
         name: req.body.name,
         age: req.body.age,
         headers: {

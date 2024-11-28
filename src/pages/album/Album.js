@@ -30,7 +30,7 @@ export default function Album(){
                 setDescription(albumResponse.data.description);
                 setCoverArt(albumResponse.data.cover_art);
 
-                const commentsResponse = await axios.get(`http://localhost:4000/api/comments/${id}`);
+                const commentsResponse = await axios.get(`http://localhost:4000/api/album/${id}/comments`);
                 setComments(commentsResponse.data);
             } catch (error) {
                 console.error(error);
@@ -51,7 +51,7 @@ export default function Album(){
             nRating
         };
 
-        axios.put('http://localhost:4000/api/comments/' + id, newComment)
+        axios.put('http://localhost:4000/api/album/comment/create', newComment)
             .then((res) => {
                 console.log(res.data);
                 navigate(`#`);

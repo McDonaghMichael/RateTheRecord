@@ -10,6 +10,7 @@ export default function Artist(){
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
     const [headers, setHeaders] = useState([]);
+    const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,6 +19,9 @@ export default function Artist(){
                 setName(response.data.name);
                 setAge(response.data.age);
                 setHeaders(response.data.headers);
+
+                const albumsResponse = await axios.get(`http://localhost:4000/api/artist/${id}/albums`);
+                setAlbums(albumsResponse.data);
             } catch (error) {
                 console.error(error);
             }
@@ -35,6 +39,19 @@ export default function Artist(){
                     <div key={index}>
                         <h2>{key}</h2>
                         <p>{value}</p>
+                    </div>
+                ))
+            )}
+
+            {albums && Object.keys(albums).length > 0 && (
+                Object.entries(albums).map(([key, value], index) => (
+                    <div key={value.id}>
+                        <h2>{value.title}</h2>
+                        <img src={value.cover_art}></img>
+                        <p>{value.id}</p>
+                        <a href={`/album/${value.id}`}>
+                            <button>View Album</button>
+                        </a>
                     </div>
                 ))
             )}
