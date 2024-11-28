@@ -5,6 +5,8 @@ import Homepage from "./pages/homepage/Homepage";
 import Album from "./pages/album/Album";
 import Leaderboard from "./pages/leaderboard/Leaderboard";
 import Artist from "./pages/artist/Artist";
+import Admin from "./pages/admin/Admin";
+import CreateArtist from "./pages/admin/subpages/CreateArtist";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
               <Route path="/album/:id" element={<Album />} />
               <Route path="/artist/:id" element={<Artist />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/create-artist" element={<CreateArtist />} />
           </Routes>
   );
 }

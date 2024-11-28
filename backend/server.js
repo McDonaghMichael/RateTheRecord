@@ -143,7 +143,7 @@ app.get('/api/comments/:id', async (req, res) => {
 });
 
 app.put('/api/comments/:id', async (req, res) => {
-  comments.push({
+    comments.push({
         id: 4,
         album_id: req.body.nId,
         author: req.body.author,
@@ -151,7 +151,23 @@ app.put('/api/comments/:id', async (req, res) => {
         comment: req.body.comment
     });
 
-  console.log(comments);
+    console.log(comments);
+});
+
+app.put('/api/artist/create', async (req, res) => {
+
+    // ID Needs to get highest id and then add 1
+    artists.push({
+        id: artists.length + 1,
+        name: req.body.name,
+        age: req.body.age,
+        headers: {
+            "early life": "hiiii",
+            "career": "hiiii",
+        }
+    });
+
+    console.log(artists);
 });
 
 app.get('/api/leaderboard', async (req, res) => {
