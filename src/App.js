@@ -7,6 +7,7 @@ import Leaderboard from "./pages/leaderboard/Leaderboard";
 import Artist from "./pages/artist/Artist";
 import Admin from "./pages/admin/Admin";
 import CreateArtist from "./pages/admin/subpages/CreateArtist";
+import Artists from "./pages/artists/Artists";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
               <Route path="/" element={<Homepage />} />
               <Route path="/album/:id" element={<Album />} />
+              <Route path="/artists" element={<Artists />} />
               <Route path="/artist/:id" element={<Artist />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/admin" element={<Admin />} />
