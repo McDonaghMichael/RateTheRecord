@@ -78,7 +78,7 @@ export default function Album(){
                     <label>Leave a review</label>
                     <input type="text" className="form-control" onChange={(e) => setComment(e.target.value)} />
                     <label>Rating</label>
-                    <input type="number" className="form-control" onChange={(e) => setRating(e.target.value)} />
+                    <input type="number" max={10} min={0} className="form-control" onChange={(e) => setRating(e.target.value)} />
                     <label>Your name</label>
                     <input type="text" className="form-control" onChange={(e) => setAuthor(e.target.value)} />
                 </div>
