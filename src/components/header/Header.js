@@ -15,6 +15,8 @@ const Header = () => {
                     <div className="navbar-nav">
                         <a className="nav-item nav-link text-white" href="/">Home</a>
                         <a className="nav-item nav-link text-white" href="/leaderboard">Leaderboard</a>
+                        <a className="nav-item nav-link text-white" href="/artists">Artists</a>
+                        <a className="nav-item nav-link text-white" href="/albums">Albums</a>
                     </div>
                 </div>
             </nav>

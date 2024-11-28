@@ -8,12 +8,14 @@ import Artist from "./pages/artist/Artist";
 import Admin from "./pages/admin/Admin";
 import CreateArtist from "./pages/admin/subpages/CreateArtist";
 import Artists from "./pages/artists/Artists";
+import Albums from "./pages/albums/Albums";
 
 function App() {
   return (
           <Routes>
 
               <Route path="/" element={<Homepage />} />
+              <Route path="/albums" element={<Albums />} />
               <Route path="/album/:id" element={<Album />} />
               <Route path="/artists" element={<Artists />} />
               <Route path="/artist/:id" element={<Artist />} />
