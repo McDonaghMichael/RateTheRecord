@@ -44,7 +44,7 @@ export default function Leaderboard(){
                             </td>
                             <td><img src={album.cover_art}></img> <a href={`/album/${album.id}`}>{album.title}</a>
                             </td>
-                            <td>{album.averageRating}</td>
+                            <td>{ album.averageRating != null ? album.averageRating : 0}</td>
                             <td>{album.year}</td>
                             <td>{album.ratingCount}</td>
                         </tr>
