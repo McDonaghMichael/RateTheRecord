@@ -40,7 +40,7 @@ export default function Album(){
         fetchData();
     }, [id]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         let nId = parseInt(id);
         let nRating = parseInt(rating);
@@ -56,6 +56,14 @@ export default function Album(){
                 console.log(res.data);
                 navigate(`#`);
             });
+
+        const commentsResponse = await axios.get(`http://localhost:4000/api/album/${id}/comments`);
+        setComments(commentsResponse.data);
+
+        setAuthor('');
+        setComment('');
+        setRating(0);
+
     }
     return (
         <div>
