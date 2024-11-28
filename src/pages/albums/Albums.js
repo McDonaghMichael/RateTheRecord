@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import './Albums.css';
 
 export default function Albums() {
 
@@ -20,7 +21,18 @@ export default function Albums() {
     return (
         <>
             {albums.map((album) => (
-                <a href={`/album/${album.id}`}><p>{album.title}</p></a>
+                <div className="row">
+                    <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">{album.title}</h5>
+                                <img className="albumArt" src={album.cover_art}></img>
+                                <p className="card-text">{album.description}</p>
+                                <a href={`/album/${album.id}`} className="btn btn-primary">Visit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             ))}
         </>
     )

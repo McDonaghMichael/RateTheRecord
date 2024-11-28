@@ -4,7 +4,7 @@ const Header = () => {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a className="navbar-brand" href="#">Project</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"

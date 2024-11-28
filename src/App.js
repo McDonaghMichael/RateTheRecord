@@ -10,6 +10,8 @@ import CreateArtist from "./pages/admin/subpages/CreateArtist";
 import Artists from "./pages/artists/Artists";
 import Albums from "./pages/albums/Albums";
 import CreateAlbum from "./pages/admin/subpages/CreateAlbum";
+import EditAlbum from "./pages/admin/subpages/EditAlbum";
+import EditArtist from "./pages/admin/subpages/EditArtist";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/create-artist" element={<CreateArtist />} />
               <Route path="/admin/create-album" element={<CreateAlbum />} />
+              <Route path="/admin/edit-album" element={<EditAlbum />} />
+              <Route path="/admin/edit-artist" element={<EditArtist />} />
           </Routes>
   );
 }

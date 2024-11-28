@@ -25,10 +25,20 @@ export default  function CreateArtist(){
             <h1>Create Artist</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Name</label>
-                    <input type="text" className="form-control" onChange={(e) => setName(e.target.value)}/>
-                    <label>Age</label>
-                    <input type="number" className="form-control" onChange={(e) => setAge(parseInt(e.target.value))}/>
+                    <div className="form-group row">
+                        <label htmlFor="artistName" className="col-sm-2 col-form-label">Name</label>
+                        <div className="col-sm-10">
+                            <input type="text" placeholder="Enter here..." id="artistName" className="form-control"
+                                   onChange={(e) => setName(e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label htmlFor="artistAge" className="col-sm-2 col-form-label">Age</label>
+                        <div className="col-sm-10">
+                            <input type="text" placeholder="Enter here..." id="artistAge" className="form-control"
+                                   onChange={(e) => setAge(parseInt(e.target.value))}/>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

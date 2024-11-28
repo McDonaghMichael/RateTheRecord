@@ -19,8 +19,19 @@ export default function Artists(){
 
     return (
         <>
+
             {artists.map((artist) => (
-                <a href={`/artist/${artist.id}`}><p>{artist.name}</p></a>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{artist.name}</h5>
+                                    <p className="card-text">{artist.description}</p>
+                                    <a href={`/artist/${artist.id}`} className="btn btn-primary">Visit</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
             ))}
         </>
     )
