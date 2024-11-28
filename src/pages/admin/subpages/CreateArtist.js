@@ -8,6 +8,7 @@ export default  function CreateArtist(){
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         const newArtist = {
             name,
             age
@@ -27,7 +28,7 @@ export default  function CreateArtist(){
                     <label>Name</label>
                     <input type="text" className="form-control" onChange={(e) => setName(e.target.value)}/>
                     <label>Age</label>
-                    <input type="number" className="form-control" onChange={(e) => setAge(e.target.value)}/>
+                    <input type="number" className="form-control" onChange={(e) => setAge(parseInt(e.target.value))}/>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>

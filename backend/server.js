@@ -5,7 +5,8 @@ const cors = require('cors');
 const app = express();
 const port = 4000;
 
-const albums = [{
+const albums = [
+    {
     id: 1,
     title: 'Elton John',
     cover_art: "https://upload.wikimedia.org/wikipedia/en/b/bd/Elton_John_-_Elton_John.jpg",
@@ -122,6 +123,30 @@ app.get('/api/album/:id', async (req, res) => {
         res.status(404).send('Album not found');
     }
 });
+
+app.put('/api/album/create', async (req, res) => {
+
+    let id = 0;
+
+    // Loops through all of the albums in order to find the highest id
+    albums.forEach(album => {
+        if(album.id > id) {
+            id = album.id;
+        }
+    })
+
+    albums.push({
+        id: id + 1,
+        title: req.body.title,
+        cover_art: req.body.cover_art,
+        year: req.body.year,
+        description: req.body.description,
+        artist: req.body.artist,
+    });
+
+    console.log(albums);
+});
+
 
 // Returns all the comments belonging to a certain album
 app.get('/api/album/:id/comments', async (req, res) => {

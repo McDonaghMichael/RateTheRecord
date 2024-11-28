@@ -9,6 +9,7 @@ import Admin from "./pages/admin/Admin";
 import CreateArtist from "./pages/admin/subpages/CreateArtist";
 import Artists from "./pages/artists/Artists";
 import Albums from "./pages/albums/Albums";
+import CreateAlbum from "./pages/admin/subpages/CreateAlbum";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/create-artist" element={<CreateArtist />} />
+              <Route path="/admin/create-album" element={<CreateAlbum />} />
           </Routes>
   );
 }
