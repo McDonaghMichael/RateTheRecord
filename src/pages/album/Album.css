@@ -1,0 +1,22 @@
+.album-title {
+    text-align: center;
+}
+
+.album-form {
+    width: 25%;
+    margin: auto;
+}
+
+.comment-card {
+    width: 65%;
+    margin: auto;
+}
+
+.lead {
+    margin-top: 15px;
+}
+
+.album-form button {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}

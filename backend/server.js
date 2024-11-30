@@ -171,7 +171,7 @@ app.put('/api/album/comment/create', async (req, res) => {
         }
     })
 
-    comments.push({
+    comments.unshift({
         id: id + 1,
         album_id: req.body.nId,
         author: req.body.author,

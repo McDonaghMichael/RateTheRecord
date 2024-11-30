@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
+import './Album.css';
 
 export default function Album(){
     let { id } = useParams();
@@ -67,31 +68,54 @@ export default function Album(){
     }
     return (
         <div>
-            <div className="jumbotron">
-                <h1 className="display-6">{title}</h1>
-                <img src={coverArt}></img>
-                <p className="lead">{description}</p>
+            <h1 className="display-6 album-title">{title}</h1>
+            <br></br>
+            <div className="row">
+                <div className="col-4 mx-auto text-center">
+                    <img src={coverArt}></img>
+                    <p className="lead">{description}</p>
+                </div>
             </div>
-            {comments.length > 0 && (
-                <ul>
-                    {comments.map((comment) => (
-                        <li key={comment.id}>
-                            {comment.author} {comment.rating}/10 - {comment.comment}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            <form onSubmit={handleSubmit}>
+            <form className="album-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Leave a review</label>
-                    <input type="text" className="form-control" onChange={(e) => setComment(e.target.value)} />
+                    <input type="text" className="form-control" onChange={(e) => setComment(e.target.value)}/>
                     <label>Rating</label>
-                    <input type="number" max={10} min={0} className="form-control" onChange={(e) => setRating(e.target.value)} />
+                    <input type="number" max={10} min={0} className="form-control"
+                           onChange={(e) => setRating(e.target.value)}/>
                     <label>Your name</label>
-                    <input type="text" className="form-control" onChange={(e) => setAuthor(e.target.value)} />
+                    <input type="text" className="form-control" onChange={(e) => setAuthor(e.target.value)}/>
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
+
+            {comments.length > 0 && (
+                <ul>
+                    {comments.map((comment) => (
+                        <div className="card mb-4 comment-card">
+                            <div className="card-body">
+                                <p>{comment.comment}</p>
+                                <div className="d-flex justify-content-between">
+                                    <div className="d-flex flex-row align-items-center">
+                                        <img
+                                            src="https://static-00.iconduck.com/assets.00/profile-default-icon-1024x1023-4u5mrj2v.png"
+                                            alt="avatar"
+                                            width="25"
+                                            height="25"
+                                        />
+                                        <p className="small mb-0 ms-2">{comment.author}</p>
+                                    </div>
+                                    <div className="d-flex flex-row align-items-center">
+                                        <p className="small text-muted mb-0">Rating {comment.rating}/10</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </ul>
+            )}
+
+
         </div>
     );
 
