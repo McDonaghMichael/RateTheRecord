@@ -36,6 +36,8 @@ const artists = [
     {
         id: 1,
         name: "Elton John",
+        description: "hi",
+        profile_image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
         age: 75,
         headers: {
             "early life": "hiiii",
@@ -45,6 +47,8 @@ const artists = [
     {
         id: 2,
         name: "The Weeknd",
+        description: "hi",
+        profile_image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
         age: 75,
         headers: {
             "early life": "hiiii",
@@ -54,6 +58,8 @@ const artists = [
     {
         id: 3,
         name: "Queen",
+        description: "hi",
+        profile_image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
         age: 75,
         headers: {
             "early life": "hiiii",

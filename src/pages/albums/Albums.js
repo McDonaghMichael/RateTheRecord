@@ -19,23 +19,23 @@ export default function Albums() {
     console.log(albums);
 
     return (
-        <>
-            {albums.map((album) => (
-                <div className="row">
-                    <div className="col-sm-6">
-                        <div className="card">
+        <div className="container">
+            <div className="row">
+                {albums.map((album, index) => (
+                    <div className="col-md-4 mb-4" key={album.id}>
+                        <div className="card h-100">
                             <div className="card-body">
                                 <h5 className="card-title">{album.title}</h5>
-                                <img className="albumArt" src={album.cover_art}></img>
+                                <img className="albumArt img-fluid" src={album.cover_art} alt={album.title} />
                                 <p className="card-text">{album.description}</p>
                                 <a href={`/album/${album.id}`} className="btn btn-primary">Visit</a>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
-        </>
+                ))}
+            </div>
+        </div>
     )
-        ;
+    ;
 
 }
