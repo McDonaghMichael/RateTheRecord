@@ -1,152 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const mongoose = require('mongoose');
+const {Schema} = require("mongoose");
 const app = express();
 const port = 4000;
 
-const albums = [
-    {
-    id: 1,
-    title: 'Elton John',
-    cover_art: "https://upload.wikimedia.org/wikipedia/en/b/bd/Elton_John_-_Elton_John.jpg",
-    year: 1969,
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    artist: 1
-    },
-    {
-        id: 2,
-        title: 'Dawn FM',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/b/b9/The_Weeknd_-_Dawn_FM.png",
-        year: 2022,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 2
-    },
-    {
-        id: 4,
-        title: 'Kiss Land',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/e/ed/The_Weeknd_-_Kiss_Land.png",
-        year: 2013,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 2
-    },
-    {
-        id: 5,
-        title: 'Starboy',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/3/39/The_Weeknd_-_Starboy.png",
-        year: 2016,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 2
-    },
-    {
-        id: 6,
-        title: 'After Hours',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/c/c1/The_Weeknd_-_After_Hours.png",
-        year: 2020,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 2
-    },
-    {
-        id: 6,
-        title: 'Beauty Behind The Madness',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/b/bd/The_Weeknd_-_Beauty_Behind_the_Madness.png",
-        year: 2015,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 2
-    },
-    {
-        id: 3,
-        title: 'A Night At The Opera',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
-        year: 1975,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 3
-    },
-    {
-        id: 7,
-        title: 'Empty Sky',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/e/ec/Elton_John_-_Empty_Sky.jpg",
-        year: 1969,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 1
-    },
-    {
-        id: 8,
-        title: 'Madman Across The Water',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/d/d4/Elton_John_-_Madman_Across_the_Water.jpg",
-        year: 1971,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 1
-    },
-    {
-        id: 9,
-        title: 'Honky Chateau',
-        cover_art: "https://upload.wikimedia.org/wikipedia/en/f/f0/Elton_John_-_Honky_Ch%C3%A2teau.jpg",
-        year: 1972,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        artist: 1
-    }
-];
+mongoose.connect('mongodb+srv://admin:ThisIsMyAdminPassword@cluster0.wha9n.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
-const artists = [
-    {
-        id: 1,
-        name: "Elton John",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        profile_image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
-        age: 75,
-        headers: {
-            "Early Life": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Career": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        }
-    },
-    {
-        id: 2,
-        name: "The Weeknd",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        profile_image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/The_Weeknd_Cannes_2023.png/330px-The_Weeknd_Cannes_2023.png",
-        age: 34,
-        headers: {
-            "Early Life": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Career": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        }
-    },
-    {
-        id: 3,
-        name: "Queen",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        profile_image: "https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png",
-        age: 75,
-        headers: {
-            "Early Life": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "Career": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        }
-    }
-]
+const artistSchema = new Schema({
+    name: String,
+    age: Number,
+    profileImage: String,
+    description: String,
+    headers: Object
+});
 
-const comments = [
-    {
-        id: 1,
-        album_id: 1,
-        author: 'Michael',
-        rating: 3,
-        comment: "bad"
-    },
-    {
-        id: 2,
-        album_id: 2,
-        author: 'Michael',
-        rating: 9,
-        comment: "GOOOOD"
-    },
-    {
-        id: 3,
-        album_id: 2,
-        author: 'Tom',
-        rating: 5,
-        comment: "its okay"
-    }
-];
+const albumSchema = new Schema({
+    title: String,
+    year: Number,
+    coverArt: String,
+    description: String,
+    artist: String
+});
+
+const commentsSchema = new Schema({
+    albumId: String,
+    author: String,
+    rating: Number,
+    comment: String
+});
+
+
+const Artist = mongoose.model('Artist', artistSchema);
+const Album = mongoose.model('Album', albumSchema);
+const Comment = mongoose.model('Comment', commentsSchema);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -170,15 +58,14 @@ app.use(function(req, res, next) {
 });
 
 // Returns an array of all the albums
-app.get('/api/albums', (req, res) => {
+app.get('/api/albums', async (req, res) => {
+    const albums = await Album.find({});
     res.json(albums);
 });
 
 // Returns the array of information belonging to an album
 app.get('/api/album/:id', async (req, res) => {
-    const albumId = parseInt(req.params.id);
-    const album = albums.find(album => album.id === albumId);
-    console.log(album);
+    const album = await Album.findById(req.params.id);
     if (album) {
         res.json(album);
     } else {
@@ -188,72 +75,67 @@ app.get('/api/album/:id', async (req, res) => {
 
 app.put('/api/album/create', async (req, res) => {
 
-    let id = 0;
-
-    // Loops through all of the albums in order to find the highest id
-    albums.forEach(album => {
-        if(album.id > id) {
-            id = album.id;
-        }
-    })
-
-    albums.push({
-        id: id + 1,
+    const newAlbum = new Album({
         title: req.body.title,
-        cover_art: req.body.cover_art,
+        coverArt: req.body.coverArt,
         year: req.body.year,
         description: req.body.description,
         artist: req.body.artist,
     });
-
-    console.log(albums);
+    await newAlbum.save();
 });
 
 
 // Returns all the comments belonging to a certain album
 app.get('/api/album/:id/comments', async (req, res) => {
-    const albumId = parseInt(req.params.id);
-    const matchingComments = comments.filter(comment => comment.album_id === albumId);
+    try {
+        const album = await Album.findById(req.params.id);
+        if (!album) {
+            return res.status(404).send('Album not found');
+        }
 
-    if (matchingComments.length > 0) {
-        res.json(matchingComments);
-    } else {
-        res.status(204).send('No comments found for this album');
+        // Fetch comments that are linked to this album
+        const comments = await Comment.find({ albumId: album._id });
+
+        if (comments.length > 0) {
+            res.json(comments);
+        } else {
+            res.status(204).send('No comments found for this album');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
     }
 });
 
+
 app.put('/api/album/comment/create', async (req, res) => {
+    try {
+        const newComment = new Comment({
+            albumId: req.body.albumId,
+            author: req.body.author,
+            rating: req.body.rate,
+            comment: req.body.comment
+        });
 
-    let id = 0;
-
-    // Loops through all the artists in order to find the highest id
-    comments.forEach(comment => {
-        if(comment.id > id) {
-            id = comment.id;
-        }
-    })
-
-    comments.unshift({
-        id: id + 1,
-        album_id: req.body.nId,
-        author: req.body.author,
-        rating: req.body.nRating,
-        comment: req.body.comment
-    });
-
-    console.log(comments);
+        await newComment.save();
+        res.status(201).json({ message: 'Comment added successfully', comment: newComment });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to add comment' });
+    }
 });
 
+
 // Returns an array of all the artists
-app.get('/api/artists', (req, res) => {
+app.get('/api/artists', async (req, res) => {
+    const artists = await Artist.find({});
     res.json(artists);
 });
 
 // Returns an array of information about an artist
 app.get('/api/artist/:id', async (req, res) => {
-    const artistId = parseInt(req.params.id);
-    const artist = artists.find(artist => artist.id === artistId);
-    console.log(artist);
+    const artist = await Artist.findById(req.params.id);
     if (artist) {
         res.json(artist);
     } else {
@@ -262,67 +144,84 @@ app.get('/api/artist/:id', async (req, res) => {
 });
 
 // Returns an array of albums belonging to an artist
-app.get('/api/artist/:id/albums', async (req, res) => {const albumId = parseInt(req.params.id);
-    const artistId = parseInt(req.params.id);
-    const artistAlbums = albums.filter(album => album.artist === artistId);
+app.get('/api/artist/:id/albums', async (req, res) => {
+    try {
+        const artistId = req.params.id;
+        const artist = await Artist.findById(artistId);
 
-    if (artistAlbums.length > 0) {
-        res.json(artistAlbums);
-    } else {
-        res.status(204).send('No albums found for this artist');
+        if (!artist) {
+            return res.status(404).send('Artist not found');
+        }
+
+        const artistAlbums = await Album.find({ artist: artistId });
+
+        if (artistAlbums.length > 0) {
+            res.json(artistAlbums);
+        } else {
+            res.status(204).send('No albums found for this artist');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
     }
-
 });
 
+
 app.put('/api/artist/create', async (req, res) => {
-
-    let id = 0;
-
-    // Loops through all of the artists in order to find the highest id
-    artists.forEach(artist => {
-        if(artist.id > id) {
-            id = artist.id;
-        }
-    })
-
-    artists.push({
-        id: id + 1,
-        name: req.body.name,
-        age: req.body.age,
-        headers: {
-            "Early Life": "hiiii",
-            "career": "hiiii",
-        }
-    });
-
-    console.log(artists);
+    try {
+        const newArtist = new Artist({
+            name: req.body.name,
+            age: req.body.age,
+            description: req.body.description,
+            profileImage: req.body.profileImage,
+            headers: req.body.headers
+        });
+        await newArtist.save();
+        res.status(201).json({ message: 'Artist created successfully', artist: newArtist });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create artist' });
+    }
 });
 
 app.get('/api/leaderboard', async (req, res) => {
     try {
-        const allAlbums = albums;
+        // Fetch all albums, comments, and artists from the database
+        const allAlbums = await Album.find({});
+        const allComments = await Comment.find({});
+        const allArtists = await Artist.find({});
+
 
         const rankedAlbums = allAlbums.map((album) => {
 
-            const albumComments = comments.filter(com => com.album_id === album.id);
-            let val = 0;
+            const albumComments = allComments.filter(comment =>
+                comment.albumId && comment.albumId.toString() === album._id.toString()
+            );
+
+            let totalRating = 0;
             albumComments.forEach(comment => {
-                val += comment.rating;
-            })
+                totalRating += comment.rating;
+            });
 
-            const artistInfo = artists.filter(artist => artist.id === album.artist);
-
-
-            const averageRating = val / albumComments.length;
+            const averageRating = albumComments.length > 0 ? totalRating / albumComments.length : 0;
             const ratingCount = albumComments.length;
 
-            return { ...album, averageRating, ratingCount, artistInfo };
+            const artistInfo = allArtists.filter(artist => artist._id.toString().includes(album.artist));
+
+
+
+            return {
+                ...album.toObject(),
+                averageRating,
+                ratingCount,
+                artistInfo
+            };
         });
 
-        const leaderboard = rankedAlbums.sort(
-            (a, b) => b.averageRating - a.averageRating
-        );
+        // Sort albums by average rating, descending
+        const leaderboard = rankedAlbums.sort((a, b) => b.averageRating - a.averageRating);
 
+        // Send the leaderboard as the response
         res.json(leaderboard);
     } catch (error) {
         console.error(error);

@@ -29,7 +29,7 @@ export default function Album(){
                 setArtist(albumResponse.data.artist);
                 setYear(albumResponse.data.year);
                 setDescription(albumResponse.data.description);
-                setCoverArt(albumResponse.data.cover_art);
+                setCoverArt(albumResponse.data.coverArt);
 
                 const commentsResponse = await axios.get(`http://localhost:4000/api/album/${id}/comments`);
                 setComments(commentsResponse.data);
@@ -43,13 +43,13 @@ export default function Album(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        let nId = parseInt(id);
-        let nRating = parseInt(rating);
+        let albumId = id;
+        let rate = parseInt(rating);
         const newComment = {
-            nId,
+            albumId,
             author,
             comment,
-            nRating
+            rate
         };
 
         axios.put('http://localhost:4000/api/album/comment/create', newComment)

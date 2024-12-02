@@ -28,7 +28,7 @@ export default function Albums() {
                                 <h5 className="card-title">{album.title}</h5>
                                 <img className="albumArt img-fluid" src={album.cover_art} alt={album.title} />
                                 <p className="card-text">{album.description}</p>
-                                <a href={`/album/${album.id}`} className="btn btn-primary">Visit</a>
+                                <a href={`/album/${album._id}`} className="btn btn-primary">Visit</a>
                             </div>
                         </div>
                     </div>

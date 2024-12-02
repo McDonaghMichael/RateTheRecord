@@ -26,9 +26,9 @@ export default function Artists(){
                         <div className="card h-100">
                             <div className="card-body">
                                 <h5 className="card-title">{artist.name}</h5>
-                                <img className="artistArt img-fluid" src={artist.profile_image} alt={artist.name} />
+                                <img className="artistArt img-fluid" src={artist.profileImage} alt={artist.name} />
                                 <p className="card-text">{artist.description}</p>
-                                <a href={`/artist/${artist.id}`} className="btn btn-primary">Visit</a>
+                                <a href={`/artist/${artist._id}`} className="btn btn-primary">Visit</a>
                             </div>
                         </div>
                     </div>

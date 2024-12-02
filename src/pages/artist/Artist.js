@@ -21,7 +21,7 @@ export default function Artist(){
                 setName(response.data.name);
                 setAge(response.data.age);
                 setDescription(response.data.description);
-                setProfileImage(response.data.profile_image);
+                setProfileImage(response.data.profileImage);
                 setHeaders(response.data.headers);
 
                 const albumsResponse = await axios.get(`http://localhost:4000/api/artist/${id}/albums`);
@@ -44,15 +44,16 @@ export default function Artist(){
                     <p className="lead">{description}</p>
                 </div>
             </div>
-            {headers && Object.keys(headers).length > 0 && (
-                Object.entries(headers).map(([key, value], index) => (
+            {headers && Array.isArray(headers) && headers.length > 0 && (
+                headers.map((header, index) => (
                     <div key={index}>
-                        <h3 className="display-6 album-title">{key}</h3>
-
-                        <p className="lead text-center">{value}</p>
+                        <h3 className="display-6 album-title">{header.key}</h3>
+                        <p className="lead text-center">{header.value}</p>
                     </div>
                 ))
             )}
+
+
 
             <h2 className="display-6 album-title">Albums</h2>
 
@@ -61,7 +62,7 @@ export default function Artist(){
                     {Object.entries(albums).map(([key, value]) => (
                         <div key={value.id} className="album-item">
                             <div className="card album-card">
-                                <img className="card-img-top" src={value.cover_art} alt="Card image cap" />
+                                <img className="card-img-top" src={value.coverArt} alt="Card image cap" />
                                 <div className="card-body">
                                     <h5 className="card-title">{value.title}</h5>
                                     <p className="card-text">{value.description}</p>

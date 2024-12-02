@@ -1,12 +1,9 @@
-import {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Leaderboard.css';
 
-export default function Leaderboard(){
-
+export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState([]);
-    let leaderboardRow = 1;
 
     useEffect(() => {
         axios.get("http://localhost:4000/api/leaderboard")
@@ -16,9 +13,7 @@ export default function Leaderboard(){
             .catch((error) => {
                 console.log(error);
             });
-    }, [])
-
-    console.log(leaderboard);
+    }, []);
 
     return (
         <>
@@ -36,13 +31,24 @@ export default function Leaderboard(){
 
                 {leaderboard.length > 0 && (
                     <tbody>
-                    {leaderboard.map((album) => (
-                        <tr>
-                            {leaderboardRow++}
+                    {leaderboard.map((album, index) => (
+                        <tr key={album._id}>
+                            <td>{index + 1}</td>
+                            <td>
+                                {album.artistInfo && album.artistInfo.length > 0 ? (
+                                    <a href={`/artist/${album.artist}`}>
+                                        {album.artistInfo[0].name} {}
+                                    </a>
+                                ) : (
+                                    "Artist Not Available"
+                                )}
 
-                            <td><a href={`/artist/${album.artist}`}>{album.artistInfo[0].name}</a>
                             </td>
-                            <td><img src={album.cover_art}></img> <a href={`/album/${album.id}`}>{album.title}</a>
+                            <td>
+                                {album.coverArt && (
+                                    <img src={album.coverArt} alt={album.title} />
+                                )}
+                                <a href={`/album/${album._id}`}>{album.title}</a>
                             </td>
                             <td>{album.averageRating != null ? album.averageRating : 0}</td>
                             <td>{album.year}</td>
@@ -50,12 +56,8 @@ export default function Leaderboard(){
                         </tr>
                     ))}
                     </tbody>
-
-                )
-                }
+                )}
             </table>
-</>
-)
-    ;
-
+        </>
+    );
 }
