@@ -66,7 +66,7 @@ export default function Artist(){
                                 <div className="card-body">
                                     <h5 className="card-title">{value.title}</h5>
                                     <p className="card-text">{value.description}</p>
-                                    <a href={`/album/${value.id}`} className="btn btn-primary">Visit</a>
+                                    <a href={`/album/${value._id}`} className="btn btn-primary">Visit</a>
                                 </div>
                             </div>
                         </div>

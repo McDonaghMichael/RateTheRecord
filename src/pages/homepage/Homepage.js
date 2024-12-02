@@ -34,13 +34,13 @@ export default function Homepage() {
                 </ol>
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img className="d-block w-100" src={numberOneAlbum?.cover_art} alt={numberOneAlbum?.title}/>
+                        <img className="d-block w-100" src={numberOneAlbum?.coverArt} alt={numberOneAlbum?.title}/>
                     </div>
                     <div className="carousel-item">
-                        <img className="d-block w-100" src={numberTwoAlbum?.cover_art} alt={numberTwoAlbum?.title}/>
+                        <img className="d-block w-100" src={numberTwoAlbum?.coverArt} alt={numberTwoAlbum?.title}/>
                     </div>
                     <div className="carousel-item">
-                        <img className="d-block w-100" src={numberThreeAlbum?.cover_art} alt={numberThreeAlbum?.title}/>
+                        <img className="d-block w-100" src={numberThreeAlbum?.coverArt} alt={numberThreeAlbum?.title}/>
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#albumCarousel" role="button" data-bs-slide="prev">
