@@ -184,6 +184,29 @@ app.put('/api/artist/create', async (req, res) => {
     }
 });
 
+app.put('/api/artist/edit/:id', async (req, res) => {
+    try {
+        const artist = await Artist.findByIdAndUpdate(req.params.id, req.body.data, { new: true });
+        if (!artist) {
+            return res.status(404).send({ message: "Artist not found" });
+        }
+        res.send(artist);
+    } catch (error) {
+        console.error("Error updating artist:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
+
+app.delete('/api/artist/:id', async (req, res) => {
+    try {
+        await Artist.findByIdAndDelete(req.params.id);
+        res.send({ message: "Artist deleted successfully." });
+    } catch (error) {
+        res.status(500).send({ error: "Failed to delete artist." });
+    }
+});
+
+
 app.get('/api/leaderboard', async (req, res) => {
     try {
         // Fetch all albums, comments, and artists from the database

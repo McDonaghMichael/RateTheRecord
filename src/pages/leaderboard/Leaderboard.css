@@ -2,3 +2,12 @@
     width: 25px;
     height: 25px;
 }
+
+.artist-link, .album-link {
+    text-decoration: none;
+    color: #212121;
+}
+
+.album-link {
+    margin-left: 15px;
+ }

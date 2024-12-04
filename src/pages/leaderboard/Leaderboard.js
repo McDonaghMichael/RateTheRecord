@@ -36,7 +36,7 @@ export default function Leaderboard() {
                             <td>{index + 1}</td>
                             <td>
                                 {album.artistInfo && album.artistInfo.length > 0 ? (
-                                    <a href={`/artist/${album.artist}`}>
+                                    <a className="artist-link" href={`/artist/${album.artist}`}>
                                         {album.artistInfo[0].name} {}
                                     </a>
                                 ) : (
@@ -48,7 +48,7 @@ export default function Leaderboard() {
                                 {album.coverArt && (
                                     <img src={album.coverArt} alt={album.title} />
                                 )}
-                                <a href={`/album/${album._id}`}>{album.title}</a>
+                                <a className="album-link" href={`/album/${album._id}`}>{album.title}</a>
                             </td>
                             <td>{album.averageRating != null ? album.averageRating : 0}</td>
                             <td>{album.year}</td>
