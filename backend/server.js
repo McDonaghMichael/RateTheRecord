@@ -85,6 +85,18 @@ app.put('/api/album/create', async (req, res) => {
     await newAlbum.save();
 });
 
+app.put('/api/album/edit/:id', async (req, res) => {
+    try {
+        const album = await Album.findByIdAndUpdate(req.params.id, req.body.data, { new: true });
+        if (!album) {
+            return res.status(404).send({ message: "Album not found" });
+        }
+        res.send(album);
+    } catch (error) {
+        console.error("Error updating album:", error);
+        res.status(500).send({ message: "Internal server error" });
+    }
+});
 
 // Returns all the comments belonging to a certain album
 app.get('/api/album/:id/comments', async (req, res) => {
@@ -203,6 +215,15 @@ app.delete('/api/artist/:id', async (req, res) => {
         res.send({ message: "Artist deleted successfully." });
     } catch (error) {
         res.status(500).send({ error: "Failed to delete artist." });
+    }
+});
+
+app.delete('/api/album/:id', async (req, res) => {
+    try {
+        await Album.findByIdAndDelete(req.params.id);
+        res.send({ message: "Album deleted successfully." });
+    } catch (error) {
+        res.status(500).send({ error: "Failed to delete album." });
     }
 });
 

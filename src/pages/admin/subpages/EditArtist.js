@@ -138,7 +138,6 @@ export default function EditArtist(props) {
                             </select>
                         </div>
                     </div>
-                    {/* Conditionally render the rest of the form */}
                     {artist && (
                         <>
                             <div className="form-group row">
