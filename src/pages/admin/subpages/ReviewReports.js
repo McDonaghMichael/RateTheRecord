@@ -33,6 +33,7 @@ export default function ReviewReports() {
         try {
             await axios.delete(`http://localhost:4000/api/report/${selectedComment._id}`);
             alert("Report deleted successfully.");
+            handleReportCloseModal();
 
             axios.get("http://localhost:4000/api/reports")
                 .then((response) => {
@@ -51,6 +52,8 @@ export default function ReviewReports() {
             await axios.delete(`http://localhost:4000/api/report/${selectedComment._id}`);
             await axios.delete(`http://localhost:4000/api/album/comment/${selectedComment.commentId}`);
             alert("Report deleted successfully.");
+            handleReportCloseModal();
+
 
             axios.get("http://localhost:4000/api/reports")
                 .then((response) => {
