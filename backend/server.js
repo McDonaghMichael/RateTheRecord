@@ -272,3 +272,20 @@ app.get('/api/leaderboard', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+app.get('/api/search/:query', async (req, res) => {
+    try {
+        const query = req.params.query;
+        const keywords = query.split(' ');
+
+        const searchRegex = keywords.map(keyword => new RegExp(keyword, 'i'));
+
+        const artists = await Artist.find({ name: searchRegex });
+        const albums = await Album.find({ title: searchRegex });
+
+        res.json({ artists, albums });
+    } catch (error) {
+        console.error('Error searching:', error);
+        res.status(500).send('Error searching for artists or albums.');
+    }
+});
