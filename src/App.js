@@ -13,6 +13,7 @@ import CreateAlbum from "./pages/admin/subpages/CreateAlbum";
 import EditAlbum from "./pages/admin/subpages/EditAlbum";
 import EditArtist from "./pages/admin/subpages/EditArtist";
 import Search from "./pages/search/Search";
+import ReviewReports from "./pages/admin/subpages/ReviewReports";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/admin/create-album" element={<CreateAlbum />} />
               <Route path="/admin/edit-album" element={<EditAlbum />} />
               <Route path="/admin/edit-artist" element={<EditArtist />} />
+              <Route path="/admin/review-reports" element={<ReviewReports />} />
               <Route path="/search/:query" element={<Search />} />
           </Routes>
   );

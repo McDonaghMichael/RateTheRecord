@@ -16,8 +16,6 @@ export default function Artists(){
             });
     }, [])
 
-    console.log(artists);
-
     return (
         <div className="container">
             <div className="row">

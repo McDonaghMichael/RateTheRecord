@@ -33,6 +33,7 @@ const Header = () => {
                         <a className="nav-item nav-link text-white" href="/leaderboard">Leaderboard</a>
                         <a className="nav-item nav-link text-white" href="/artists">Artists</a>
                         <a className="nav-item nav-link text-white" href="/albums">Albums</a>
+                        <a className="nav-item nav-link text-white" href="/admin">Admin</a>
                     </div>
                     <form className="form my-2 my-lg-0 ms-auto d-flex">
                         <input

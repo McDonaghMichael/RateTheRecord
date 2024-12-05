@@ -31,10 +31,18 @@ const commentsSchema = new Schema({
     comment: String
 });
 
+const reportedCommentsSchema = new Schema({
+    reason: String,
+    commentId: String,
+    commentAuthor: String,
+    commentContent: String
+});
+
 
 const Artist = mongoose.model('Artist', artistSchema);
 const Album = mongoose.model('Album', albumSchema);
 const Comment = mongoose.model('Comment', commentsSchema);
+const ReportedComments = mongoose.model('Reported Comments', reportedCommentsSchema);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -137,6 +145,77 @@ app.put('/api/album/comment/create', async (req, res) => {
         res.status(500).json({ error: 'Failed to add comment' });
     }
 });
+
+app.delete('/api/album/comment/:id', async (req, res) => {
+    try {
+        await Comment.findByIdAndDelete(req.params.id);
+        res.send({ message: "Comment deleted successfully." });
+    } catch (error) {
+        res.status(500).send({ error: "Failed to delete artist." });
+    }
+});
+
+app.get('/api/reports', async (req, res) => {
+    const reports = await ReportedComments.find({});
+    res.json(reports);
+});
+
+
+app.put('/api/report/comment', async (req, res) => {
+    try {
+        const { reason, commentId, commentAuthor, commentContent } = req.body;
+
+        const existingReport = await ReportedComments.findOne({
+            commentId: commentId
+        });
+
+        if (existingReport) {
+            return res.status(400).json({ message: 'This comment has already been reported.' });
+        }
+
+        const newCommentReport = new ReportedComments({
+            reason,
+            commentAuthor,
+            commentContent,
+            commentId
+        });
+
+        await newCommentReport.save();
+        res.status(201).json({ message: 'Report added successfully', report: newCommentReport });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to add Report' });
+    }
+});
+
+app.delete('/api/report/:id', async (req, res) => {
+    try {
+        await ReportedComments.findByIdAndDelete(req.params.id);
+        res.send({ message: "Reported Comment deleted successfully." });
+    } catch (error) {
+        res.status(500).send({ error: "Failed to delete report." });
+    }
+});
+
+app.get('/api/report/comment/check/:commentId', async (req, res) => {
+    try {
+        const { commentId } = req.params;
+
+        const existingReport = await ReportedComments.findOne({ commentId });
+
+        if (existingReport) {
+            return res.json({ reported: true });
+        }
+
+        res.json({ reported: false });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to check if comment is reported.' });
+    }
+});
+
+
 
 
 // Returns an array of all the artists

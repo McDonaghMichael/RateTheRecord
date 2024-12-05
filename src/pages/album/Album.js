@@ -18,8 +18,50 @@ export default function Album(){
     const [comment, setComment] = useState("");
     const [rating, setRating] = useState(0);
 
+    const [reportModelOpen, setReportModelOpen] = useState(false);
+    const [selectedComment, setSelectedComment] = useState(null);
+    const [reportReason, setReportReason] = useState(null);
+
 
     const navigate = useNavigate();
+
+    const handleReportOpenModal = (comment) => {
+        setSelectedComment(comment);
+        setReportModelOpen(true);
+    };
+
+    const handleReportCloseModal = () => {
+        setReportModelOpen(false);
+        setSelectedComment(null);
+    };
+
+    const handleModalSubmit = async () => {
+        const newCommentReport = {
+            commentId: selectedComment._id,
+            reason: reportReason,
+            commentAuthor: selectedComment.author,
+            commentContent: selectedComment.comment,
+        };
+
+        try {
+
+            const response = await axios.get(`http://localhost:4000/api/report/comment/check/${selectedComment._id}`);
+
+            if (response.data.reported) {
+                alert("This comment has already been reported.");
+                return;
+            }
+
+            const res = await axios.put('http://localhost:4000/api/report/comment', newCommentReport);
+            console.log(res.data);
+            handleReportCloseModal();
+            alert("Report has been submitted. Our admins will review it shortly.");
+        } catch (error) {
+            console.error("Error submitting report:", error);
+            alert("There was an error submitting the report. Please try again.");
+        }
+    };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -89,10 +131,11 @@ export default function Album(){
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
+
             {comments.length > 0 && (
                 <ul>
                     {comments.map((comment) => (
-                        <div className="card mb-4 comment-card">
+                        <div className="card mb-4 comment-card" key={comment._id}>
                             <div className="card-body">
                                 <p>{comment.comment}</p>
                                 <div className="d-flex justify-content-between">
@@ -108,14 +151,49 @@ export default function Album(){
                                     <div className="d-flex flex-row align-items-center">
                                         <p className="small text-muted mb-0">Rating {comment.rating}/10</p>
                                     </div>
+                                    <button type="button" className="btn btn-primary"
+                                            onClick={() => handleReportOpenModal(comment)}>Report
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </ul>
             )}
+            
+            {reportModelOpen && (
+                <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Report Comment</h5>
+                                <button type="button" className="close" onClick={handleReportCloseModal}
+                                        aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <h5 className="modal-header">Author: {selectedComment.author}</h5>
+                            <p className="modal-header">Content: {selectedComment.comment}</p>
 
-
+                            <div className="modal-body">
+                                <form>
+                                    <div className="form-group">
+                                        <label htmlFor="message-text" className="col-form-label">Report
+                                            Reasoning:</label>
+                                        <textarea onChange={(e) => setReportReason(e.target.value)} className="form-control" id="message-text"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary"
+                                        onClick={handleReportCloseModal}>Close
+                                </button>
+                                <button type="button" className="btn btn-primary"  onClick={() => handleModalSubmit()}>Submit Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 
