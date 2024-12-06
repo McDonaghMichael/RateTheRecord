@@ -1,8 +1,26 @@
-.card {
-    width: 18rem;
+.custom-card {
+    flex: 0 0 19%; /* Ensures 5 cards per row (5 * 19% + gaps = ~100%) */
+    max-width: 19%;
+    margin: 0.5%;
 }
 
-.admin-container {
-    margin-left: auto;
-    margin-right: auto;
+@media (max-width: 992px) {
+    .custom-card {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-card {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-card {
+        flex: 0 0 90%;
+        max-width: 90%;
+    }
 }

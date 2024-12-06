@@ -41,8 +41,9 @@ export default function CreateAlbum() {
     };
 
     return (
-        <div>
-            <h1>Create Album</h1>
+        <div className="d-flex justify-content-center align-items-center">
+            <div className="w-50">
+            <h1 className="text-center mt-5 mb-5">Create Artist</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <div className="form-group row">
@@ -122,10 +123,13 @@ export default function CreateAlbum() {
                         </div>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-primary">
-                    Submit
-                </button>
+                <div className="text-center">
+                    <button type="submit" className="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
             </form>
+            </div>
         </div>
     );
 }

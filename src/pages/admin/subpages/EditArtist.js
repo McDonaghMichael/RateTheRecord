@@ -114,8 +114,9 @@ export default function EditArtist(props) {
 
 
     return (
-        <div>
-            <h1>Edit Artist</h1>
+        <div className="d-flex justify-content-center align-items-center">
+        <div className="w-50">
+        <h1 className="text-center mt-5 mb-5">Edit Artist</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <div className="form-group row">
@@ -140,102 +141,106 @@ export default function EditArtist(props) {
                     </div>
                     {artist && (
                         <>
-                            <div className="form-group row">
-                                <label htmlFor="artistName" className="col-sm-2 col-form-label">Name</label>
-                                <div className="col-sm-10">
+                        <div className="form-group row">
+                            <label htmlFor="artistName" className="col-sm-2 col-form-label">Name</label>
+                            <div className="col-sm-10">
+                                <input
+                                    type="text"
+                                    placeholder="Enter here..."
+                                    id="artistName"
+                                    value={name}
+                                    className="form-control"
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="artistAge" className="col-sm-2 col-form-label">Age</label>
+                            <div className="col-sm-10">
+                                <input
+                                    type="text"
+                                    placeholder="Enter here..."
+                                    id="artistAge"
+                                    value={age}
+                                    className="form-control"
+                                    onChange={(e) => setAge(parseInt(e.target.value))}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="artistDescription" className="col-sm-2 col-form-label">Description</label>
+                            <div className="col-sm-10">
+                                <input
+                                    type="text"
+                                    placeholder="Enter here..."
+                                    id="artistDescription"
+                                    value={description}
+                                    className="form-control"
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label htmlFor="artistProfileImage" className="col-sm-2 col-form-label">Profile
+                                Image</label>
+                            <div className="col-sm-10">
+                                <input
+                                    type="text"
+                                    placeholder="Enter here..."
+                                    id="artistProfileImage"
+                                    value={profileImage}
+                                    className="form-control"
+                                    onChange={(e) => setProfileImage(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        {headers.map((header, index) => (
+                            <div key={index} className="form-group row">
+                                <div className="col-sm-4">
                                     <input
                                         type="text"
-                                        placeholder="Enter here..."
-                                        id="artistName"
-                                        value={name}
+                                        placeholder="Title"
                                         className="form-control"
-                                        onChange={(e) => setName(e.target.value)}
+                                        value={header.key}
+                                        onChange={(e) => updateHeader(index, "key", e.target.value)}
                                     />
                                 </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="artistAge" className="col-sm-2 col-form-label">Age</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-4">
                                     <input
                                         type="text"
-                                        placeholder="Enter here..."
-                                        id="artistAge"
-                                        value={age}
+                                        placeholder="Description"
                                         className="form-control"
-                                        onChange={(e) => setAge(parseInt(e.target.value))}
+                                        value={header.value}
+                                        onChange={(e) => updateHeader(index, "value", e.target.value)}
                                     />
                                 </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="artistDescription" className="col-sm-2 col-form-label">Description</label>
-                                <div className="col-sm-10">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter here..."
-                                        id="artistDescription"
-                                        value={description}
-                                        className="form-control"
-                                        onChange={(e) => setDescription(e.target.value)}
-                                    />
+                                <div className="col-sm-2">
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger"
+                                        onClick={() => removeHeader(index)}
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
                             </div>
-                            <div className="form-group row">
-                                <label htmlFor="artistProfileImage" className="col-sm-2 col-form-label">Profile Image</label>
-                                <div className="col-sm-10">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter here..."
-                                        id="artistProfileImage"
-                                        value={profileImage}
-                                        className="form-control"
-                                        onChange={(e) => setProfileImage(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-                            {headers.map((header, index) => (
-                                <div key={index} className="form-group row">
-                                    <div className="col-sm-4">
-                                        <input
-                                            type="text"
-                                            placeholder="Title"
-                                            className="form-control"
-                                            value={header.key}
-                                            onChange={(e) => updateHeader(index, "key", e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="col-sm-4">
-                                        <input
-                                            type="text"
-                                            placeholder="Description"
-                                            className="form-control"
-                                            value={header.value}
-                                            onChange={(e) => updateHeader(index, "value", e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="col-sm-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-danger"
-                                            onClick={() => removeHeader(index)}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
+                        ))}
+                        <div className="text-center mt-5 mb-5">
                             <button type="button" className="btn btn-secondary" onClick={addHeader}>
                                 Add Header
                             </button>
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className="btn btn-primary ms-5 me-5">
                                 Submit
                             </button>
                             <button type="button" className="btn btn-warning" onClick={deleteArtist}>
                                 Delete
                             </button>
+                        </div>
                         </>
-                    )}
-                </div>
-            </form>
+                        )}
+                        </div>
+                        </form>
+                        </div>
         </div>
     );
 

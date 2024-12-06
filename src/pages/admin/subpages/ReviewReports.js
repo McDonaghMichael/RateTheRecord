@@ -68,27 +68,38 @@ export default function ReviewReports() {
 
     return (
         <div className="container">
+            <h1 className="text-center mb-4 mt-4">Review Reports</h1>
             <div className="row">
-                {reports.map((report) => (
-                    <div className="col-md-4 mb-4" key={report._id}>
-                        <div className="card h-100">
-                            <div className="card-body">
-                                <h5 className="card-title">{report.commentAuthor}</h5>
-                                <p className="card-text">{report.commentContent}</p>
-                                <a className="btn btn-primary" onClick={() => handleReportOpenModal(report)}>Examine Report</a>
+                {reports.length > 0 ? (
+                    reports.map((report) => (
+                        <div className="col-md-4 mb-4" key={report._id}>
+                            <div className="card h-100">
+                                <div className="card-body">
+                                    <h5 className="card-title">{report.commentAuthor}</h5>
+                                    <p className="card-text">{report.commentContent}</p>
+                                    <a
+                                        className="btn btn-primary"
+                                        onClick={() => handleReportOpenModal(report)}
+                                    >
+                                        Examine Report
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="text-center">
+                        <p className="text-muted">No reports available.</p>
                     </div>
-                ))}
+                )}
             </div>
             {reportModelOpen && (
-                <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+                <div className="modal" tabIndex="-1" role="dialog" style={{ display: "block" }}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Report Review</h5>
                             </div>
-
                             <div className="modal-body">
                                 <h4>Report Reasoning:</h4>
                                 <p>{selectedComment.reason}</p>
@@ -98,14 +109,27 @@ export default function ReviewReports() {
                                 <p>{selectedComment.commentContent}</p>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={cancelReport}>Cancel Report
+                                <button
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={cancelReport}
+                                >
+                                    Cancel Report
                                 </button>
-                                <button type="button" className="btn btn-warning" onClick={deleteComment}>Delete Comment
+                                <button
+                                    type="button"
+                                    className="btn btn-warning"
+                                    onClick={deleteComment}
+                                >
+                                    Delete Comment
                                 </button>
-                                <button type="button" className="btn btn-secondary"
-                                        onClick={handleReportCloseModal}>Close
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={handleReportCloseModal}
+                                >
+                                    Close
                                 </button>
-
                             </div>
                         </div>
                     </div>
@@ -113,4 +137,5 @@ export default function ReviewReports() {
             )}
         </div>
     );
+
 }

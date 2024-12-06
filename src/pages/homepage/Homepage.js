@@ -5,11 +5,10 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Homepage.css';
 
 export default function Homepage() {
+
     const [numberOneAlbum, setNumberOneAlbum] = useState([]);
     const [numberTwoAlbum, setNumberTwoAlbum] = useState([]);
     const [numberThreeAlbum, setNumberThreeAlbum] = useState([]);
-
-
 
     useEffect(() => {
         axios.get("http://localhost:4000/api/leaderboard")
@@ -25,7 +24,14 @@ export default function Homepage() {
 
     return (
         <div>
+            <div className="jumbotron jumbotron-fluid mb-5 text-center">
+                <div className="container">
+                    <h1 className="display-4">Rate The Record</h1>
+                    <p className="lead">Welcome to <em>RateTheRecord</em>, the number #1 destination for reviewing your favourite albums! Review all the albums from your favourite artists to help them gain dominance on the leaderboard.</p>
+                </div>
+            </div>
             <h1 className="display-6 album-title">Top 3 Rated Albums</h1>
+            <p className="text-center lead">Dynamically updates whenever a new album enters the top 3</p>
             <div id="albumCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
                 <ol className="carousel-indicators">
                     <li data-bs-target="#albumCarousel" data-bs-slide-to="0" className="active"></li>

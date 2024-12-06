@@ -32,7 +32,7 @@ export default function Search() {
 
     return (
         <div>
-            <h3>Search Results: {query}</h3>
+            <h1 className="text-center mt-5 mb-5">Search Results for <span className="text-black-50">{query}</span></h1>
             {albums.length > 0 && (
                 <div className="container">
                     <h4>Albums</h4>
