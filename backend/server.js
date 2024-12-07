@@ -1,50 +1,28 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
+import express from 'express';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
+// Schemas are imported into the API
+import AlbumSchema from './schemas/AlbumSchema.js';
+import ArtistSchema from './schemas/ArtistSchema.js';
+import CommentsSchema from './schemas/CommentsSchema.js';
+import ReportedCommentsSchema from './schemas/ReportedCommentsSchema.js';
+
 const app = express();
 const port = 4000;
 
 mongoose.connect('mongodb+srv://admin:ThisIsMyAdminPassword@cluster0.wha9n.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
-const artistSchema = new Schema({
-    name: String,
-    age: Number,
-    profileImage: String,
-    description: String,
-    headers: Object
-});
+// Models are created for each of our schemas so we can interact with them directly
+const Artist = mongoose.model('Artist', ArtistSchema);
+const Album = mongoose.model('Album', AlbumSchema);
+const Comment = mongoose.model('Comment', CommentsSchema);
+const ReportedComments = mongoose.model('Reported Comments', ReportedCommentsSchema);
 
-const albumSchema = new Schema({
-    title: String,
-    year: Number,
-    coverArt: String,
-    description: String,
-    artist: String
-});
-
-const commentsSchema = new Schema({
-    albumId: String,
-    author: String,
-    rating: Number,
-    comment: String
-});
-
-const reportedCommentsSchema = new Schema({
-    reason: String,
-    commentId: String,
-    commentAuthor: String,
-    commentContent: String
-});
-
-
-const Artist = mongoose.model('Artist', artistSchema);
-const Album = mongoose.model('Album', albumSchema);
-const Comment = mongoose.model('Comment', commentsSchema);
-const ReportedComments = mongoose.model('Reported Comments', reportedCommentsSchema);
-
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -56,7 +34,6 @@ app.listen(port, () => {
 });
 
 app.use(cors());
-
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // Allow all origins
@@ -71,7 +48,7 @@ app.get('/api/albums', async (req, res) => {
     res.json(albums);
 });
 
-// Returns the array of information belonging to an album
+// Returns the array of information belonging to an album given the album ID
 app.get('/api/album/:id', async (req, res) => {
     const album = await Album.findById(req.params.id);
     if (album) {
@@ -81,6 +58,7 @@ app.get('/api/album/:id', async (req, res) => {
     }
 });
 
+// Creates an album and pushes it to the database
 app.put('/api/album/create', async (req, res) => {
 
     const newAlbum = new Album({
@@ -93,16 +71,23 @@ app.put('/api/album/create', async (req, res) => {
     await newAlbum.save();
 });
 
+// Edits to an album are pushed to this method based on the album id
 app.put('/api/album/edit/:id', async (req, res) => {
     try {
-        const album = await Album.findByIdAndUpdate(req.params.id, req.body.data, { new: true });
+        const album = await Album.findByIdAndUpdate(req.params.id, req.body.data, {
+            new: true
+        });
         if (!album) {
-            return res.status(404).send({ message: "Album not found" });
+            return res.status(404).send({
+                message: "Album not found"
+            });
         }
         res.send(album);
     } catch (error) {
         console.error("Error updating album:", error);
-        res.status(500).send({ message: "Internal server error" });
+        res.status(500).send({
+            message: "Internal server error"
+        });
     }
 });
 
@@ -115,7 +100,9 @@ app.get('/api/album/:id/comments', async (req, res) => {
         }
 
         // Fetch comments that are linked to this album
-        const comments = await Comment.find({ albumId: album._id });
+        const comments = await Comment.find({
+            albumId: album._id
+        });
 
         if (comments.length > 0) {
             res.json(comments);
@@ -128,7 +115,7 @@ app.get('/api/album/:id/comments', async (req, res) => {
     }
 });
 
-
+// Creates a comment for an album
 app.put('/api/album/comment/create', async (req, res) => {
     try {
         const newComment = new Comment({
@@ -139,38 +126,56 @@ app.put('/api/album/comment/create', async (req, res) => {
         });
 
         await newComment.save();
-        res.status(201).json({ message: 'Comment added successfully', comment: newComment });
+        res.status(201).json({
+            message: 'Comment added successfully',
+            comment: newComment
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to add comment' });
+        res.status(500).json({
+            error: 'Failed to add comment'
+        });
     }
 });
 
+// Deletes a comment based on its id
 app.delete('/api/album/comment/:id', async (req, res) => {
     try {
         await Comment.findByIdAndDelete(req.params.id);
-        res.send({ message: "Comment deleted successfully." });
+        res.send({
+            message: "Comment deleted successfully."
+        });
     } catch (error) {
-        res.status(500).send({ error: "Failed to delete artist." });
+        res.status(500).send({
+            error: "Failed to delete artist."
+        });
     }
 });
 
+// Returns the array of reports from the database
 app.get('/api/reports', async (req, res) => {
     const reports = await ReportedComments.find({});
     res.json(reports);
 });
 
-
+// Pushes a new comment report to the database
 app.put('/api/report/comment', async (req, res) => {
     try {
-        const { reason, commentId, commentAuthor, commentContent } = req.body;
+        const {
+            reason,
+            commentId,
+            commentAuthor,
+            commentContent
+        } = req.body;
 
         const existingReport = await ReportedComments.findOne({
             commentId: commentId
         });
 
         if (existingReport) {
-            return res.status(400).json({ message: 'This comment has already been reported.' });
+            return res.status(400).json({
+                message: 'This comment has already been reported.'
+            });
         }
 
         const newCommentReport = new ReportedComments({
@@ -181,42 +186,60 @@ app.put('/api/report/comment', async (req, res) => {
         });
 
         await newCommentReport.save();
-        res.status(201).json({ message: 'Report added successfully', report: newCommentReport });
+        res.status(201).json({
+            message: 'Report added successfully',
+            report: newCommentReport
+        });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to add Report' });
+        res.status(500).json({
+            error: 'Failed to add Report'
+        });
     }
 });
 
+// Deletes a report from the database based on its id
 app.delete('/api/report/:id', async (req, res) => {
     try {
         await ReportedComments.findByIdAndDelete(req.params.id);
-        res.send({ message: "Reported Comment deleted successfully." });
+        res.send({
+            message: "Reported Comment deleted successfully."
+        });
     } catch (error) {
-        res.status(500).send({ error: "Failed to delete report." });
+        res.status(500).send({
+            error: "Failed to delete report."
+        });
     }
 });
 
+// Checks whether or not a comment has already been reported
 app.get('/api/report/comment/check/:commentId', async (req, res) => {
     try {
-        const { commentId } = req.params;
+        const {
+            commentId
+        } = req.params;
 
-        const existingReport = await ReportedComments.findOne({ commentId });
+        const existingReport = await ReportedComments.findOne({
+            commentId
+        });
 
         if (existingReport) {
-            return res.json({ reported: true });
+            return res.json({
+                reported: true
+            });
         }
 
-        res.json({ reported: false });
+        res.json({
+            reported: false
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to check if comment is reported.' });
+        res.status(500).json({
+            error: 'Failed to check if comment is reported.'
+        });
     }
 });
-
-
-
 
 // Returns an array of all the artists
 app.get('/api/artists', async (req, res) => {
@@ -244,7 +267,9 @@ app.get('/api/artist/:id/albums', async (req, res) => {
             return res.status(404).send('Artist not found');
         }
 
-        const artistAlbums = await Album.find({ artist: artistId });
+        const artistAlbums = await Album.find({
+            artist: artistId
+        });
 
         if (artistAlbums.length > 0) {
             res.json(artistAlbums);
@@ -257,7 +282,7 @@ app.get('/api/artist/:id/albums', async (req, res) => {
     }
 });
 
-
+// Creates a new artist on the database
 app.put('/api/artist/create', async (req, res) => {
     try {
         const newArtist = new Artist({
@@ -268,45 +293,67 @@ app.put('/api/artist/create', async (req, res) => {
             headers: req.body.headers
         });
         await newArtist.save();
-        res.status(201).json({ message: 'Artist created successfully', artist: newArtist });
+        res.status(201).json({
+            message: 'Artist created successfully',
+            artist: newArtist
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to create artist' });
+        res.status(500).json({
+            error: 'Failed to create artist'
+        });
     }
 });
 
+// Pushes the new edits of an artist to the database
 app.put('/api/artist/edit/:id', async (req, res) => {
     try {
-        const artist = await Artist.findByIdAndUpdate(req.params.id, req.body.data, { new: true });
+        const artist = await Artist.findByIdAndUpdate(req.params.id, req.body.data, {
+            new: true
+        });
         if (!artist) {
-            return res.status(404).send({ message: "Artist not found" });
+            return res.status(404).send({
+                message: "Artist not found"
+            });
         }
         res.send(artist);
     } catch (error) {
         console.error("Error updating artist:", error);
-        res.status(500).send({ message: "Internal server error" });
+        res.status(500).send({
+            message: "Internal server error"
+        });
     }
 });
 
+// Deletes an artist from the database
 app.delete('/api/artist/:id', async (req, res) => {
     try {
         await Artist.findByIdAndDelete(req.params.id);
-        res.send({ message: "Artist deleted successfully." });
+        res.send({
+            message: "Artist deleted successfully."
+        });
     } catch (error) {
-        res.status(500).send({ error: "Failed to delete artist." });
+        res.status(500).send({
+            error: "Failed to delete artist."
+        });
     }
 });
 
+// Deletes an album from the database
 app.delete('/api/album/:id', async (req, res) => {
     try {
         await Album.findByIdAndDelete(req.params.id);
-        res.send({ message: "Album deleted successfully." });
+        res.send({
+            message: "Album deleted successfully."
+        });
     } catch (error) {
-        res.status(500).send({ error: "Failed to delete album." });
+        res.status(500).send({
+            error: "Failed to delete album."
+        });
     }
 });
 
-
+// Returns all the albums on the leaderboard and their rankings
 app.get('/api/leaderboard', async (req, res) => {
     try {
         // Fetch all albums, comments, and artists from the database
@@ -314,13 +361,15 @@ app.get('/api/leaderboard', async (req, res) => {
         const allComments = await Comment.find({});
         const allArtists = await Artist.find({});
 
-
+        // Loops through all of the albums we have
         const rankedAlbums = allAlbums.map((album) => {
 
+            // This will filter out all of the comments in our database so that only those comments that belong to the album are returned
             const albumComments = allComments.filter(comment =>
                 comment.albumId && comment.albumId.toString() === album._id.toString()
             );
 
+            // The total rating is basically all of the ratings added up from the comments
             let totalRating = 0;
             albumComments.forEach(comment => {
                 totalRating += comment.rating;
@@ -331,8 +380,6 @@ app.get('/api/leaderboard', async (req, res) => {
 
             const artistInfo = allArtists.filter(artist => artist._id.toString().includes(album.artist));
 
-
-
             return {
                 ...album.toObject(),
                 averageRating,
@@ -341,10 +388,13 @@ app.get('/api/leaderboard', async (req, res) => {
             };
         });
 
-        // Sort albums by average rating, descending
+        /**
+         * Now that all the albums have been given their information such as average ratings, artist info, etc, we will then
+         * sort the album and using a callback function to sort them in order, such as if the consecutive elements a and b, if the result
+         * is positive, element b is placed before a, and vice versa, this will sort the albums based on their ratings
+         */
         const leaderboard = rankedAlbums.sort((a, b) => b.averageRating - a.averageRating);
 
-        // Send the leaderboard as the response
         res.json(leaderboard);
     } catch (error) {
         console.error(error);
@@ -352,17 +402,26 @@ app.get('/api/leaderboard', async (req, res) => {
     }
 });
 
+// Returns artist and album information based on search query
 app.get('/api/search/:query', async (req, res) => {
     try {
         const query = req.params.query;
         const keywords = query.split(' ');
 
+        // Using regex we will map through all keywords and using 'i' it will match both upper and lower cases
         const searchRegex = keywords.map(keyword => new RegExp(keyword, 'i'));
 
-        const artists = await Artist.find({ name: searchRegex });
-        const albums = await Album.find({ title: searchRegex });
+        const artists = await Artist.find({
+            name: searchRegex
+        });
+        const albums = await Album.find({
+            title: searchRegex
+        });
 
-        res.json({ artists, albums });
+        res.json({
+            artists,
+            albums
+        });
     } catch (error) {
         console.error('Error searching:', error);
         res.status(500).send('Error searching for artists or albums.');
