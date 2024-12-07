@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import './Artists.css';
+import {Link} from "react-router-dom";
 
 export default function Artists(){
 
@@ -28,7 +29,7 @@ export default function Artists(){
                                     <h5 className="card-title">{artist.name}</h5>
                                     <img className="artistArt img-fluid" src={artist.profileImage} alt={artist.name}/>
                                     <p className="card-text">{artist.description}</p>
-                                    <a href={`/artist/${artist._id}`} className="btn btn-primary">Visit</a>
+                                    <Link to={`/artist/${artist._id}`} className="btn btn-primary">Visit</Link>
                                 </div>
                             </div>
                         </div>

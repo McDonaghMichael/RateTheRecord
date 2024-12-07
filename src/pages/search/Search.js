@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Search.css';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 export default function Search() {
 
@@ -44,7 +44,7 @@ export default function Search() {
                                         <h5 className="card-title">{album.title}</h5>
                                         <img className="albumArt img-fluid" src={album.coverArt} alt={album.title} />
                                         <p className="card-text">{album.description}</p>
-                                        <a href={`/album/${album._id}`} className="btn btn-primary">Visit</a>
+                                        <Link to={`/album/${album._id}`} className="btn btn-primary">Visit</Link>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@ export default function Search() {
                                             <img className="artistArt img-fluid" src={artist.profileImage}
                                                  alt={artist.name}/>
                                             <p className="card-text">{artist.description}</p>
-                                            <a href={`/artist/${artist._id}`} className="btn btn-primary">Visit</a>
+                                            <Link to={`/artist/${artist._id}`} className="btn btn-primary">Visit</Link>
                                         </div>
                                     </div>
                                 </div>

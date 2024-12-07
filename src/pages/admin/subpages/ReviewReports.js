@@ -77,12 +77,12 @@ export default function ReviewReports() {
                                 <div className="card-body">
                                     <h5 className="card-title">{report.commentAuthor}</h5>
                                     <p className="card-text">{report.commentContent}</p>
-                                    <a
+                                    <span
                                         className="btn btn-primary"
                                         onClick={() => handleReportOpenModal(report)}
                                     >
                                         Examine Report
-                                    </a>
+                                    </span>
                                 </div>
                             </div>
                         </div>

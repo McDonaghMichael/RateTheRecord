@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import './Albums.css';
+import {Link} from "react-router-dom";
 
 export default function Albums() {
 
@@ -30,7 +31,7 @@ export default function Albums() {
                                     <h5 className="card-title">{album.title}</h5>
                                     <img className="albumArt img-fluid" src={album.coverArt} alt={album.title}/>
                                     <p className="card-text">{album.description}</p>
-                                    <a href={`/album/${album._id}`} className="btn btn-primary">Visit</a>
+                                    <Link to={`/album/${album._id}`} className="btn btn-primary">Visit</Link>
                                 </div>
                             </div>
                         </div>

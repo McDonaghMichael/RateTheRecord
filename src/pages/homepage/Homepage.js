@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './Homepage.css';
+import {Link} from "react-router-dom";
 
 export default function Homepage() {
 
@@ -49,12 +50,12 @@ export default function Homepage() {
                         <img className="d-block w-100" src={numberThreeAlbum?.coverArt} alt={numberThreeAlbum?.title}/>
                     </div>
                 </div>
-                <a className="carousel-control-prev" href="#albumCarousel" role="button" data-bs-slide="prev">
+                <Link className="carousel-control-prev" to="#albumCarousel" role="button" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                </a>
-                <a className="carousel-control-next" href="#albumCarousel" role="button" data-bs-slide="next">
+                </Link>
+                <Link className="carousel-control-next" to="#albumCarousel" role="button" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                </a>
+                </Link>
             </div>
 
         </div>

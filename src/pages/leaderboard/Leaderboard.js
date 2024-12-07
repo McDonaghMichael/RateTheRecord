@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Leaderboard.css';
+import {Link} from "react-router-dom";
 
 export default function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState([]);
@@ -36,9 +37,9 @@ export default function Leaderboard() {
                             <td>{index + 1}</td>
                             <td>
                                 {album.artistInfo && album.artistInfo.length > 0 ? (
-                                    <a className="artist-link" href={`/artist/${album.artist}`}>
+                                    <Link className="artist-link" to={`/artist/${album.artist}`}>
                                         {album.artistInfo[0].name} {}
-                                    </a>
+                                    </Link>
                                 ) : (
                                     "Artist Not Available"
                                 )}
@@ -48,7 +49,7 @@ export default function Leaderboard() {
                                 {album.coverArt && (
                                     <img src={album.coverArt} alt={album.title} />
                                 )}
-                                <a className="album-link" href={`/album/${album._id}`}>{album.title}</a>
+                                <Link className="album-link" to={`/album/${album._id}`}>{album.title}</Link>
                             </td>
                             <td>{album.averageRating != null ? album.averageRating : 0}</td>
                             <td>{album.year}</td>

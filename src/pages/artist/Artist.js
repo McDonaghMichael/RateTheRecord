@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import './Artist.css';
@@ -40,7 +40,8 @@ export default function Artist(){
             <br></br>
             <div className="row">
                 <div className="col-4 mx-auto text-center">
-                    <img src={profileImage}></img>
+                    <img src={profileImage} alt="Profile"></img>
+                    <p className="lead">Age {age}</p>
                     <p className="lead">{description}</p>
                 </div>
             </div>
@@ -62,11 +63,11 @@ export default function Artist(){
                     {Object.entries(albums).map(([key, value]) => (
                         <div key={value.id} className="album-item">
                             <div className="card album-card">
-                                <img className="card-img-top" src={value.coverArt} alt="Card image cap" />
+                                <img className="card-img-top" src={value.coverArt} alt="Card cap" />
                                 <div className="card-body">
                                     <h5 className="card-title">{value.title}</h5>
                                     <p className="card-text">{value.description}</p>
-                                    <a href={`/album/${value._id}`} className="btn btn-primary">Visit</a>
+                                    <Link to={`/album/${value._id}`} className="btn btn-primary">Visit</Link>
                                 </div>
                             </div>
                         </div>

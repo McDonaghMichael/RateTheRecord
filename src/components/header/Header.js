@@ -1,6 +1,6 @@
 import './Header.css';
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Header = () => {
 
@@ -21,11 +21,11 @@ const Header = () => {
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a className="navbar-brand" href="/">
+                <Link className="navbar-brand" to="/">
                     <img src="/assets/logo.png" width="60" height="60"
                          className="d-inline-block align-top" alt=""/>
-                </a>
-                <a className="navbar-brand" href="/">RateTheRecord</a>
+                </Link>
+                <Link className="navbar-brand" to="/">RateTheRecord</Link>
                 <button
                     className="navbar-toggler"
                     type="button"
@@ -39,11 +39,11 @@ const Header = () => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <a className="nav-item nav-link text-white" href="/">Home</a>
-                        <a className="nav-item nav-link text-white" href="/leaderboard">Leaderboard</a>
-                        <a className="nav-item nav-link text-white" href="/artists">Artists</a>
-                        <a className="nav-item nav-link text-white" href="/albums">Albums</a>
-                        <a className="nav-item nav-link text-white" href="/admin">Admin</a>
+                        <Link className="nav-item nav-link text-white" to="/">Home</Link>
+                        <Link className="nav-item nav-link text-white" to="/leaderboard">Leaderboard</Link>
+                        <Link className="nav-item nav-link text-white" to="/artists">Artists</Link>
+                        <Link className="nav-item nav-link text-white" to="/albums">Albums</Link>
+                        <Link className="nav-item nav-link text-white" to="/admin">Admin</Link>
                     </div>
                     <form className="form my-2 my-lg-0 ms-auto d-flex">
                         <input

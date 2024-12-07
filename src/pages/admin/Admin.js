@@ -1,4 +1,5 @@
 import './Admin.css';
+import {Link} from "react-router-dom";
 
 const Admin = () => {
     return (
@@ -10,7 +11,7 @@ const Admin = () => {
                     <div className="card-body">
                         <h5 className="card-title">Create Artist</h5>
                         <p className="card-text">Add a new artist to the database by providing their details and bio.</p>
-                        <a href="/admin/create-artist" className="btn btn-primary">Create Artist</a>
+                        <Link to="/admin/create-artist" className="btn btn-primary">Create Artist</Link>
                     </div>
                 </div>
 
@@ -19,7 +20,7 @@ const Admin = () => {
                     <div className="card-body">
                         <h5 className="card-title">Create Album</h5>
                         <p className="card-text">Add a new album, including album title, cover art, and description.</p>
-                        <a href="/admin/create-album" className="btn btn-primary">Create Album</a>
+                        <Link to="/admin/create-album" className="btn btn-primary">Create Album</Link>
                     </div>
                 </div>
 
@@ -28,7 +29,7 @@ const Admin = () => {
                     <div className="card-body">
                         <h5 className="card-title">Edit Artist</h5>
                         <p className="card-text">Modify an existing artist’s information, including their bio and image.</p>
-                        <a href="/admin/edit-artist" className="btn btn-primary">Edit Artist</a>
+                        <Link to="/admin/edit-artist" className="btn btn-primary">Edit Artist</Link>
                     </div>
                 </div>
 
@@ -37,7 +38,7 @@ const Admin = () => {
                     <div className="card-body">
                         <h5 className="card-title">Edit Album</h5>
                         <p className="card-text">Edit details of an existing album, such as artist, cover, and description.</p>
-                        <a href="/admin/edit-album" className="btn btn-primary">Edit Album</a>
+                        <Link to="/admin/edit-album" className="btn btn-primary">Edit Album</Link>
                     </div>
                 </div>
 
@@ -46,7 +47,7 @@ const Admin = () => {
                     <div className="card-body">
                         <h5 className="card-title">Review Reports</h5>
                         <p className="card-text">Review any of the comments that have been reported.</p>
-                        <a href="/admin/review-reports" className="btn btn-primary">Review Reports</a>
+                        <Link to="/admin/review-reports" className="btn btn-primary">Review Reports</Link>
                     </div>
                 </div>
             </div>
