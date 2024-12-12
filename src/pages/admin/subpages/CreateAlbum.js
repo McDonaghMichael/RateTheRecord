@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function CreateAlbum() {
+
     const [title, setTitle] = useState("");
     const [artist, setArtist] = useState("");
     const [coverArt, setCoverArt] = useState("");
@@ -9,6 +10,7 @@ export default function CreateAlbum() {
     const [year, setYear] = useState(0);
     const [artists, setArtists] = useState([]);
 
+    // Fetches the artists we have in our database so we can assign an album to one
     useEffect(() => {
         const fetchArtists = async () => {
             try {
@@ -22,6 +24,7 @@ export default function CreateAlbum() {
         fetchArtists();
     }, []);
 
+    // Handles the form submission when submitting an album
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -33,8 +36,7 @@ export default function CreateAlbum() {
             artist,
         };
 
-        axios
-            .put("http://localhost:4000/api/album/create", newAlbum)
+        axios.put("http://localhost:4000/api/album/create", newAlbum)
             .then((res) => {
                 console.log(res.data);
             });

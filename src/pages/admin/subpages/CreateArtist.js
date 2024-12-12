@@ -26,15 +26,19 @@ export default  function CreateArtist(){
             });
     }
 
+    // Adds the header information to the current array using [...]
     const addHeader = () => {
         setHeaders([...headers, { key: "", value: "" }]);
     }
 
+    // Filters through all the headers leaving only those that havent the index being removed
     const removeHeader = (index) => {
         setHeaders(headers.filter((header, i) => i !== index));
     }
 
     const updateHeader = (index, key, value) => {
+
+        // Finds the header that matches the index
         const head = headers.filter((header, i) => i === index);
         if(key === "key"){
             head[0].key = value
@@ -42,7 +46,6 @@ export default  function CreateArtist(){
         if(key === "value"){
             head[0].value = value
         }
-        console.log(head);
     }
 
     return (

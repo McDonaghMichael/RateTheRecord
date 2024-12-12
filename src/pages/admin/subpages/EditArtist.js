@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function EditArtist(props) {
+
     const [artist, setArtist] = useState("");
     const [artists, setArtists] = useState([]);
     const [name, setName] = useState("");
@@ -10,7 +11,7 @@ export default function EditArtist(props) {
     const [age, setAge] = useState(0);
     const [headers, setHeaders] = useState([]);
 
-
+    // Fetches all of the artists in our database
     useEffect(() => {
         const fetchArtists = async () => {
             try {

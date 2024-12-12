@@ -5,16 +5,18 @@ export default function ReviewReports() {
 
     const [reports, setReports] = useState([]);
 
-    const [reportModelOpen, setReportModelOpen] = useState(false);
+    const [reportModalOpen, setReportModalOpen] = useState(false);
     const [selectedComment, setSelectedComment] = useState(null);
 
+    // When a comment is selected, this stores the specific comment info for the modal
     const handleReportOpenModal = (comment) => {
         setSelectedComment(comment);
-        setReportModelOpen(true);
+        setReportModalOpen(true);
     };
 
+    // Resets the select Modal information
     const handleReportCloseModal = () => {
-        setReportModelOpen(false);
+        setReportModalOpen(false);
         setSelectedComment(null);
     };
 
@@ -28,6 +30,7 @@ export default function ReviewReports() {
             });
     }, [])
 
+    // Simple method to send a delete request to delete a report, but not the comment
     const cancelReport = async () => {
 
         try {
@@ -93,7 +96,7 @@ export default function ReviewReports() {
                     </div>
                 )}
             </div>
-            {reportModelOpen && (
+            {reportModalOpen && (
                 <div className="modal" tabIndex="-1" role="dialog" style={{ display: "block" }}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">

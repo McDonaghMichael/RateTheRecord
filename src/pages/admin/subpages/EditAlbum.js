@@ -13,6 +13,7 @@ export default  function EditAlbum(){
     const [artists, setArtists] = useState([]);
     const [albums, setAlbums] = useState([]);
 
+    // Fetches all the artists in our database
     useEffect(() => {
         const fetchArtists = async () => {
             try {
@@ -22,14 +23,12 @@ export default  function EditAlbum(){
                 console.error("Error fetching artists:", error);
             }
         };
-
-
         fetchArtists();
     }, []);
 
+    // Loads in the relevant albums depending on the artist in the params
     const loadArtist = async (artist) => {
         setSelectedArtist(artist)
-
         try {
             const response = await axios.get("http://localhost:4000/api/artist/" + artist + "/albums");
             setAlbums(response.data);
@@ -38,9 +37,11 @@ export default  function EditAlbum(){
         }
     }
 
+    // Loads all of the album data into the states
     const loadAlbum = (album) => {
 
         setAlbum(album);
+
         const selectedAlbum = albums.filter(a => a._id === album);
 
         setTitle(selectedAlbum[0].title);
